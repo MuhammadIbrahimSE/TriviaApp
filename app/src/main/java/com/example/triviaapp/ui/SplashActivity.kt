@@ -10,7 +10,7 @@ import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class SplashActivity : AppCompatActivity() {
-    private  val SPLASH_DISPLAY_LENGTH:Long = 3000
+    private  val SPLASH_DISPLAY_LENGTH:Long = 4000
     private lateinit var handler: Handler
 
     override fun onCreate(savedInstanceState: Bundle?) {
