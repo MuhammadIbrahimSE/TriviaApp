@@ -1,0 +1,17 @@
+<resources>
+    <string name="app_name">Trivia</string>
+    <string name="category">Category</string>
+    <string name="level">Level</string>
+    <string name="type">Type</string>
+    <string name="start">Start</string>
+    <string name="select_category">Select category</string>
+    <string name="select_type">Select type</string>
+    <string name="trivia_app">Welcome to\nTrivia!</string>
+    <string name="next">Next</string>
+    <string name="quick_mode">Quick Mode</string>
+    <string name="hint_ans_1">Ans 1</string>
+    <string name="hint_ans_2">Ans 2</string>
+    <string name="hint_ans_3">Ans 3</string>
+    <string name="hint_ans_4">Ans 4</string>
+    <string name="hint_question">Question: ------------</string>
+</resources>
