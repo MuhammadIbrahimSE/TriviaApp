@@ -106,8 +106,8 @@ class QuestionActivity : AppCompatActivity(), View.OnClickListener {
                             countDownTimer()
 
                         } else {
-                           /* viewUtils.showToast("Sorry! No question found")
-                            finish()*/
+                            viewUtils.showToast("Sorry! No questions found")
+                           // finish()
                         }
                     }
                     is Failure -> {
@@ -144,15 +144,10 @@ class QuestionActivity : AppCompatActivity(), View.OnClickListener {
                     val currentQuestion = mQuestionList[questionIndex - 1]
                     var isCorrect = false
                     val markedAnswer = radioButton.text.toString()
-//                        if(type.equals("multiple")) {
+
                     if (markedAnswer.toLowerCase() == currentQuestion.correct_answer.toLowerCase())
                         isCorrect = true
-//                        }
-//                        else{
-//                            if(markedAnswer.toLowerCase() == "True".toLowerCase())
-//                                isCorrect = true
-//                        }
-                    //constant.showToast("" + radioButton.text)
+
 
                     option_1.isChecked = true
                     option_2.isChecked = false
@@ -173,9 +168,7 @@ class QuestionActivity : AppCompatActivity(), View.OnClickListener {
                         }
                     }
 
-//                        localViewModel.getAllRecordFromLocal().observe(this, androidx.lifecycle.Observer { data ->
-//                            Toast.makeText(this, "${data.size}", Toast.LENGTH_LONG).show()
-//                        })
+
 
                     if (questionIndex < mQuestionList.size) {
                         val nextQuestion = mQuestionList[questionIndex]
@@ -252,7 +245,7 @@ class QuestionActivity : AppCompatActivity(), View.OnClickListener {
                 countDownTimer?.cancel()
             super.onBackPressed()
         } else
-            viewUtils.showToast("Please complete questionnaire")
+            viewUtils.showToast("Please complete all the questions")
     }
 
     private fun countDownTimer() {

@@ -11,6 +11,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:id="@+id/tv_welcome_text"
         android:text="@string/trivia_app"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -21,4 +22,18 @@
         android:textStyle="bold"
         android:gravity="center"
         />
+
+    <com.airbnb.lottie.LottieAnimationView
+        android:id="@+id/animationView"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:lottie_fileName="welcome_lottie.json"
+        app:layout_constraintDimensionRatio="1:1"
+        app:layout_constraintWidth_percent="0.7"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tv_welcome_text"
+        app:lottie_autoPlay="true"
+        app:lottie_loop="true"/>
 </androidx.constraintlayout.widget.ConstraintLayout>
