@@ -15,6 +15,7 @@ Trivia is an android app, which is built in kotlin using MVVM architecure
 ## What has been made:
 1: Selection screen for type, level and category of questions.
 2: A quick mode where user get only 5 seconds for each question.
+3: Offline first
 ## What are issues:
 1: No proper logical track of user score.
 2: User cannot see result.
