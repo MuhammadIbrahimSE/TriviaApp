@@ -1,8 +1,10 @@
 package com.example.triviaapp.di
 
 import android.content.Context
+import com.example.rickandmorty.data.remote.QuestionsRemoteDataSource
+import com.example.triviaapp.data.LocalDataSource
 import com.example.triviaapp.db.AppDatabase
-import com.example.triviaapp.interfaces.ApiInterface
+import com.example.triviaapp.interfaces.ApiService
 import com.example.triviaapp.interfaces.QuestionsAndAnswersDao
 import com.example.triviaapp.repository.MainRepository
 import com.google.gson.Gson
@@ -42,7 +44,8 @@ object AppModule {
 
     @Singleton
     @Provides
-    fun provideDatabase(@ApplicationContext appContext: Context) = AppDatabase.getInstance(appContext)
+    fun provideDatabase(@ApplicationContext appContext: Context) =
+        AppDatabase.getInstance(appContext)
 
     @Singleton
     @Provides
@@ -50,11 +53,24 @@ object AppModule {
 
     @Singleton
     @Provides
-    fun provideRepository(remoteDataSource:ApiInterface,localDataSource:QuestionsAndAnswersDao) =
+    fun provideRepository(
+        remoteDataSource: QuestionsRemoteDataSource,
+        localDataSource: LocalDataSource
+    ) =
         MainRepository(remoteDataSource, localDataSource)
 
 
+    @Singleton
+    @Provides
+    fun provideDataSource(remoteDataSource: ApiService) =
+        QuestionsRemoteDataSource(remoteDataSource)
+
+    @Singleton
+    @Provides
+    fun provideLocalDataSource(localDao: QuestionsAndAnswersDao) =
+        LocalDataSource(localDao)
+
 
     @Provides
-    fun provideAppService(retrofit: Retrofit): ApiInterface = retrofit.create(ApiInterface::class.java)
+    fun provideAppService(retrofit: Retrofit): ApiService = retrofit.create(ApiService::class.java)
 }

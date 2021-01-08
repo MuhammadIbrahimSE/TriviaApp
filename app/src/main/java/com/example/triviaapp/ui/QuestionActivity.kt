@@ -12,6 +12,8 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.observe
 import com.example.triviaapp.R
 import com.example.triviaapp.model.QuestionAndAnswers
+import com.example.triviaapp.utils.Resource
+import com.example.triviaapp.utils.Resource.*
 import com.example.triviaapp.utils.ViewUtils
 import com.example.triviaapp.viewmodel.MainViewModel
 import dagger.hilt.android.AndroidEntryPoint
@@ -49,7 +51,6 @@ class QuestionActivity : AppCompatActivity(), View.OnClickListener {
     }
 
 
-
     private fun getIntentData() {
         if (intent != null) {
             mode = intent.getStringExtra("mode").toString()
@@ -68,44 +69,54 @@ class QuestionActivity : AppCompatActivity(), View.OnClickListener {
     private fun fetchQuestions() {
         levelName = levelName?.toLowerCase(Locale.getDefault())
         Log.d("TAG_BODY", "categoryId: $categoryId level:  $levelName  type:  $type")
-        mainViewModel.callQuestionApi(amount, categoryId, levelName!!, type!!)
-        progress.visibility = View.VISIBLE
-        cl_detail.visibility = View.GONE
 
-        mainViewModel.getAllQuestions().observe(this, { response ->
-            progress.visibility = View.GONE
-            cl_detail.visibility = View.VISIBLE
-            if (response != null) {
-                mQuestionList = response as ArrayList<QuestionAndAnswers>
 
-                if (mQuestionList.size > 0) {
-                    val question = mQuestionList[0]
-                    tv_question.text = question.question
+        mainViewModel.getAllQuestions(amount, categoryId, levelName!!, type!!)
+            .observe(this, { response ->
 
-                    if (question.type.equals("multiple")) {
-
-                        val options = question.incorrect_answers
-                        options.add(question.correct_answer)
-
-                        option_1.text = options[0]
-                        option_2.text = options[1]
-                        option_3.text = options[2]
-                        option_4.text = options[3]
-                    } else {
-                        option_1.text = "True"
-                        option_2.text = "False"
-                        option_3.visibility = View.GONE
-                        option_4.visibility = View.GONE
+                when (response) {
+                    is Loading -> {
+                        progress.visibility = View.VISIBLE
+                        cl_detail.visibility = View.GONE
                     }
-                    countDownTimer()
+                    is Success -> {
+                        progress.visibility = View.GONE
+                        cl_detail.visibility = View.VISIBLE
+                        mQuestionList = response.data as ArrayList<QuestionAndAnswers>
 
-                } else {
-                    viewUtils.showToast("Sorry! No question found")
-                    finish()
+                        if (mQuestionList.size > 0) {
+                            val question = mQuestionList[0]
+                            tv_question.text = question.question
+
+                            if (question.type.equals("multiple")) {
+
+                                val options = question.incorrect_answers
+                                options.add(question.correct_answer)
+
+                                option_1.text = options[0]
+                                option_2.text = options[1]
+                                option_3.text = options[2]
+                                option_4.text = options[3]
+                            } else {
+                                option_1.text = "True"
+                                option_2.text = "False"
+                                option_3.visibility = View.GONE
+                                option_4.visibility = View.GONE
+                            }
+                            countDownTimer()
+
+                        } else {
+                           /* viewUtils.showToast("Sorry! No question found")
+                            finish()*/
+                        }
+                    }
+                    is Failure -> {
+                        viewUtils.showToast(ViewUtils.API_ERROR_MESSAGE)
+                        progress.visibility = View.GONE
+                    }
                 }
-            } else
-                viewUtils.showToast(ViewUtils.API_ERROR_MESSAGE)
-        })
+
+            })
     }
 
     private fun initialization() {

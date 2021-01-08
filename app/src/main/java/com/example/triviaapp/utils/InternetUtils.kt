@@ -6,9 +6,9 @@ import android.net.NetworkCapabilities
 import android.util.Log
 
 object InternetUtils {
-    fun isOnline(context: Context): Boolean {
+    fun Context.isOnline(): Boolean {
         val connectivityManager =
-            context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+        this.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
         if (connectivityManager != null) {
             val capabilities =
                 connectivityManager.getNetworkCapabilities(connectivityManager.activeNetwork)
